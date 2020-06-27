@@ -17,4 +17,6 @@ To run the app please follow below steps
 
 6. list all notes:-  <node app.js list>
 
+<pre><code>This is a code block.</code></pre>
+
    
