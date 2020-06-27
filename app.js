@@ -1,6 +1,7 @@
 const chalk = require('chalk')
 const yargs = require('yargs')
 const notes = require('./notes');
+const { argv } = require('yargs');
 
 //Customize yargs version
 yargs.version('1.1.0')
@@ -21,9 +22,8 @@ yargs.command({
             type: 'string'
         }
     },
-    handler: function(argv) {
-        console.log('Title :' + argv.title)
-        console.log('Note :' + argv.body)
+    handler(argv) {
+       notes.addNotes(argv.title, argv.body)
     }
 })
 
@@ -31,8 +31,15 @@ yargs.command({
 yargs.command({
     command: 'remove',
     describe: 'Removing a note',
-    handler: function() {
-        console.log('Removing a note!')
+    builder: {
+        title:{
+            describe: 'Removing a note',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler(argv) {
+       notes.removeNotes(argv.title)
     }
 })
 
@@ -40,8 +47,8 @@ yargs.command({
 yargs.command({
     command: 'list',
     describe: 'Listing all notes',
-    handler: function() {
-        console.log('Listing all notes!')
+    handler() {
+        notes.listNotes()
     }
 })
 
@@ -49,37 +56,16 @@ yargs.command({
 yargs.command({
     command: 'read',
     describe: 'Reading a note',
-    handler: function() {
-        console.log('Reading a note!')
+    builder: {
+        title: {
+            describe: 'reading a note',
+            demandOption: true,
+            type: 'string'
+        }
+    },
+    handler(argv) {
+       notes.readNote(argv.title)
     }
 })
 
 yargs.parse()
-
-// const command = process.argv[2];
-// console.log(process.argv)
-
-// if (command === 'add')
-// {
-//     console.log('Adding note!')
-// }
-// else if (command === 'remove')
-// {
-//     console.log('Removing note!')
-// }
-
-// console.log(notes())
-
-// console.log(chalk.green('Success!'))
-// console.log(chalk.blue.bold('Nodemon!'))
-
-// console.log(process.argv[2])
-
-//const validator = require('validator')
-//console.log(validator.isURL('http://abcd.com'))
-//console.log(validator.isEmail('dlbnprabath.gmail.com'))
-
-
-// const add = require('./utils')
-// const sum = add(6, 4)
-// console.log(sum)
